@@ -1,6 +1,6 @@
-# SynbioCloudLab
+# RoboTA-SynbioCloudLab
 
-SynbioCloudLab 是一个基于 Next.js 构建的合成生物学虚拟实验室平台，提供代码执行、实验分析和可视化功能。
+RoboTA-SynbioCloudLab 是一个基于 Next.js 构建的合成生物学虚拟实验室平台，提供代码执行、实验分析和可视化功能。
 
 ## 功能特点
 
