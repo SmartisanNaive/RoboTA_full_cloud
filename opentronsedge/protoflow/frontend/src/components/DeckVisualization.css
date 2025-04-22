@@ -1,0 +1,27 @@
+/* DeckVisualization.css */
+
+/* Fix for mirrored SVG elements */
+foreignObject .sc-jvbmhS {
+  transform: scale(1, 1) !important;
+}
+
+/* Ensure the text is readable by flipping it back */
+foreignObject .sc-jvbmhS .sc-edFBzD {
+  transform: scale(1, -1) !important;
+}
+
+/* Additional styling for deck labels */
+foreignObject .sc-jUkaYT {
+  /* Ensure proper positioning */
+  transform: none !important;
+}
+
+/* Ensure the deck labels are properly positioned */
+[data-testid^="DeckInfoLabel_"] {
+  transform: none !important;
+}
+
+/* Ensure the text in deck labels is readable */
+.sc-cSaEAk.sc-kXOizl.sc-eiwqOE {
+  transform: scale(1, 1) !important;
+} 

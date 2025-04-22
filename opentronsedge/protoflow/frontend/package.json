@@ -1,0 +1,33 @@
+{
+    "name": "protoflow-frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/icons-material": "^6.4.7",
+        "@mui/material": "^6.4.7",
+        "@opentrons/api-client": "file:../../api-client",
+        "@opentrons/components": "file:../../components",
+        "@opentrons/labware-library": "file:../../labware-library",
+        "@opentrons/react-api-client": "file:../../react-api-client",
+        "@opentrons/shared-data": "file:../../shared-data",
+        "@opentrons/step-generation": "file:../../step-generation",
+        "axios": "^1.6.5",
+        "d3": "^7.9.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-dropzone": "^14.3.8",
+        "react-router-dom": "^7.3.0",
+        "styled-components": "^6.1.15"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.2.1",
+        "vite": "^5.0.10"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    }
+}
