@@ -1,0 +1,11 @@
+--2025-02-21 23:39:03--  https://gh.xx9527.cn/https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
+Resolving gh.xx9527.cn (gh.xx9527.cn)... 172.67.170.249, 104.21.95.182, 2606:4700:3036::6815:5fb6, ...
+Connecting to gh.xx9527.cn (gh.xx9527.cn)|172.67.170.249|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/plain]
+Saving to: ‘install.sh’
+
+install.sh                                   [<=>                                                                                ]       0  --.-KB/s               install.sh                                   [ <=>                                                                               ]  16.17K  --.-KB/s    in 0.005s  
+
+2025-02-21 23:39:04 (3.43 MB/s) - ‘install.sh’ saved [16563]
+
