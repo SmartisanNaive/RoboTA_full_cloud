@@ -559,7 +559,7 @@ export const VideoFeed = ({ lightOn = true }: { lightOn?: boolean }) => {
   
   // HLS stream sources
   const HLS_STREAMS = {
-    primary: 'http://219.135.229.214/hls/stream1.m3u8',
+    primary: 'http://120.241.223.14/hls/stream1.m3u8',
     fallback1: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
     fallback2: 'https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8',
     fallback3: 'https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8',
