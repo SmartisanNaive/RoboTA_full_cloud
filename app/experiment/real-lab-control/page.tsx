@@ -12,7 +12,7 @@ import { translate } from "@/app/utils/translate"
 
 // 多个直播流选项 - 按照可靠性顺序排列
 const HLS_STREAMS = {
-  primary: 'http://219.135.229.214/hls/stream1.m3u8',
+  primary: 'http://120.241.223.14/hls/stream1.m3u8',
   // 备用流选项 - 更可靠的公共测试流
   fallback1: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
   // 额外备用流

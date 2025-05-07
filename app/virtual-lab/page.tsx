@@ -162,8 +162,8 @@ export default function VirtualLab() {
   // Server configuration - keeping IPs internal without directly exposing them in UI
   const serverConfig = {
     remote: {
-      apiEndpoint: "http://219.135.229.214:8000/api/analyze",
-      viewerBaseUrl: "http://219.135.229.214:3001"
+      apiEndpoint: "http://120.241.223.14:8000/api/analyze",
+      viewerBaseUrl: "http://120.241.223.14:3001"
     },
     local: {
       apiEndpoint: "http://localhost:8000/api/analyze",
