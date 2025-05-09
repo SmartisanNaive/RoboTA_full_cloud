@@ -71,3 +71,67 @@ npm run dev
 
 4. 访问应用
 打开浏览器访问 http://localhost:3000
+
+### Docker 部署
+
+1. 构建镜像
+```bash
+docker build -t synbiocloudlab .
+```
+
+2. 运行容器
+```bash
+docker run -p 3000:3000 synbiocloudlab
+```
+
+## 项目结构
+
+```
+ALLrobotaWEB/
+├── app/                    # Next.js 应用主目录
+│   ├── api/                # API 路由（执行Python、登录注册、模拟Opentrons）
+│   ├── components/         # 共享UI组件
+│   ├── contexts/           # React上下文（如语言上下文）
+│   ├── course/             # 课程相关页面
+│   ├── experiment/         # 实验详情页面和控制界面
+│   ├── experiments/        # 实验列表页面
+│   ├── help/               # 帮助文档页面
+│   ├── profile/            # 用户资料页面
+│   ├── resources/          # 学习资源页面
+│   ├── translations/       # 国际化翻译文件
+│   ├── utils/              # 工具函数
+│   ├── virtual-lab/        # 虚拟实验室页面
+│   ├── globals.css         # 全局样式
+│   ├── layout.tsx          # 主布局组件
+│   └── page.tsx            # 主页/欢迎页面
+├── components/             # 通用UI组件
+│   └── ui/                 # 基础UI组件（基于shadcn/ui）
+├── hooks/                  # 自定义React hooks
+├── lib/                    # 工具函数库
+├── public/                 # 静态资源
+├── styles/                 # 样式文件
+│
+├── opentronsedge/          # Opentrons平台相关代码
+│   ├── api/                # Opentrons API代码
+│   ├── app/                # Opentrons应用程序
+│   ├── protocol-designer/  # 协议设计器
+│   ├── components/         # Opentrons组件库
+│   ├── robot-server/       # 机器人服务器
+│   └── ...                 # 其他Opentrons相关代码
+│
+├── LLMcontrolOT3/          # 大语言模型控制Opentrons设备
+│   ├── ai_controller/      # AI控制器模块（处理自然语言指令）
+│   ├── ai_interface/       # AI接口
+│   ├── config/             # 配置文件（LLM API和机器人设置）
+│   ├── server/             # Flask服务器（提供REST API接口）
+│   ├── templates/          # Opentrons协议模板
+│   ├── protocalLibrary/    # 协议库（示例协议）
+│   └── utils/              # 工具函数（协议生成等）
+│
+├── ChatMol/                # 分子设计与分析LLM助手
+│   ├── chatmol_pkg/        # ChatMol Python包
+│   ├── chatmol-streamlit/  # Streamlit界面应用
+│   ├── copilot_public/     # ChatMol Copilot（分子设计助手）
+│   ├── miniGUI/            # 轻量级GUI界面
+│   └── pymol_plugin/       # PyMOL插件
+```
