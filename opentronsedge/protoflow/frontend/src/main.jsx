@@ -32,7 +32,9 @@ const router = createBrowserRouter([
       }
     ]
   }
-]);
+], {
+  basename: '/protoflow'
+});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
