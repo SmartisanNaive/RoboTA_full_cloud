@@ -41,157 +41,60 @@ RoboTA-SynbioCloudLab 是一个基于 Next.js 构建的合成生物学虚拟实�
 - **代码编辑器**: Monaco Editor
 - **样式**: Tailwind CSS
 - **后端**: Python FastAPI/Flask
-- **部署**: Docker
 
-## 快速开始
-
-### 环境要求
+## 环境要求
 
 - Node.js 18+
 - Python 3.9+
-- Docker (可选)
+- Opentrons Python 库及依赖
 
-### 本地开发
+## 部署指南
 
-1. 克隆项目
+本项目有两种运行模式：1) 仅运行虚拟实验室和 ProtoFlow 协议分析器，2) 运行完整的 RoboTA-SynbioCloudLab 平台。
+
+### 依赖安装
+
+#### 前端依赖
 ```bash
-git clone [项目地址]
-cd synbiocloudlab
-```
+# 主项目前端依赖
+cd ALLrobotaWEB
+npm install
 
-2. 安装依赖
-```bash
+# ProtoFlow 前端依赖
+cd opentronsedge/protoflow/frontend
 npm install
 ```
 
-3. 启动开发服务器
+#### 后端依赖
 ```bash
+# ProtoFlow 后端依赖
+cd opentronsedge/protoflow/backend
+python -m venv protoflow_env
+source protoflow_env/bin/activate  # Windows: protoflow_env\Scripts\activate
+pip install fastapi uvicorn opentrons
+```
+
+### 启动方式
+
+#### 方式一：仅启动虚拟实验室 (ProtoFlow)
+
+ProtoFlow 组件需要按以下顺序启动：
+
+1. **ProtoFlow 后端**:
+```bash
+cd opentronsedge/protoflow/backend
+# 激活虚拟环境 (如果使用)
+source protoflow_env/bin/activate  # Windows: protoflow_env\Scripts\activate
+# 启动后端服务
+python app.py
+```
+后端服务将在 `http://localhost:8000` 上运行
+
+2. **ProtoFlow 前端**:
+```bash
+cd opentronsedge/protoflow/frontend
 npm run dev
 ```
+前端服务将在 `http://localhost:3001` 上运行
 
-4. 访问应用
-打开浏览器访问 http://localhost:3000
-
-### Docker 部署
-
-1. 构建镜像
-```bash
-docker build -t synbiocloudlab .
-```
-
-2. 运行容器
-```bash
-docker run -p 3000:3000 synbiocloudlab
-```
-
-## 项目结构
-
-```
-ALLrobotaWEB/
-├── app/                    # Next.js 应用主目录
-│   ├── api/                # API 路由（执行Python、登录注册、模拟Opentrons）
-│   ├── components/         # 共享UI组件
-│   ├── contexts/           # React上下文（如语言上下文）
-│   ├── course/             # 课程相关页面
-│   ├── experiment/         # 实验详情页面和控制界面
-│   ├── experiments/        # 实验列表页面
-│   ├── help/               # 帮助文档页面
-│   ├── profile/            # 用户资料页面
-│   ├── resources/          # 学习资源页面
-│   ├── translations/       # 国际化翻译文件
-│   ├── utils/              # 工具函数
-│   ├── virtual-lab/        # 虚拟实验室页面
-│   ├── globals.css         # 全局样式
-│   ├── layout.tsx          # 主布局组件
-│   └── page.tsx            # 主页/欢迎页面
-├── components/             # 通用UI组件
-│   └── ui/                 # 基础UI组件（基于shadcn/ui）
-├── hooks/                  # 自定义React hooks
-├── lib/                    # 工具函数库
-├── public/                 # 静态资源
-├── styles/                 # 样式文件
-│
-├── opentronsedge/          # Opentrons平台相关代码
-│   ├── api/                # Opentrons API代码
-│   ├── app/                # Opentrons应用程序
-│   ├── protocol-designer/  # 协议设计器
-│   ├── components/         # Opentrons组件库
-│   ├── robot-server/       # 机器人服务器
-│   └── ...                 # 其他Opentrons相关代码
-│
-├── LLMcontrolOT3/          # 大语言模型控制Opentrons设备
-│   ├── ai_controller/      # AI控制器模块（处理自然语言指令）
-│   ├── ai_interface/       # AI接口
-│   ├── config/             # 配置文件（LLM API和机器人设置）
-│   ├── server/             # Flask服务器（提供REST API接口）
-│   ├── templates/          # Opentrons协议模板
-│   ├── protocalLibrary/    # 协议库（示例协议）
-│   └── utils/              # 工具函数（协议生成等）
-│
-├── ChatMol/                # 分子设计与分析LLM助手
-│   ├── chatmol_pkg/        # ChatMol Python包
-│   ├── chatmol-streamlit/  # Streamlit界面应用
-│   ├── copilot_public/     # ChatMol Copilot（分子设计助手）
-│   ├── miniGUI/            # 轻量级GUI界面
-│   └── pymol_plugin/       # PyMOL插件
-```
-
-## 主要功能模块
-
-### 虚拟实验室
-- Python 代码执行环境
-- Opentrons 协议分析
-- 实时输出显示
-- 代码编辑器集成
-
-### 实验分析
-- 协议分析
-- 数据可视化
-- 实验时间线展示
-
-### 实际实验室控制
-- 实验设备控制
-- 实时状态监控
-- 数据采集
-
-### Opentrons平台集成 (opentronsedge)
-- 实验协议解析与可视化
-- 协议运行动画反馈
-- 实验分析与错误检测
-- 机器人操作API接口
-- 硬件控制与监控支持
-
-### 大语言模型实验设备控制 (LLMcontrolOT3)
-- 自然语言指令解析（支持中英文）
-- 结构化机器人操作命令生成
-- 动态协议生成与执行
-- 参数验证与交互式反馈
-- 支持移液、温控、加热震荡等多种操作
-- Flask REST API服务
-
-## 开发指南
-
-### 添加新功能
-
-1. 在 `app` 目录下创建新的页面或组件
-2. 在 `components` 目录下添加可复用组件
-3. 在 `lib` 目录下添加工具函数
-4. 更新路由配置
-
-### 代码规范
-
-- 使用 TypeScript 进行开发
-- 遵循 ESLint 规则
-- 使用 Prettier 进行代码格式化
-
-## 许可证
-
-MIT License
-
-## 联系方式
-
-- 邮箱: gaoyuanbio@qq.com
-
-## 致谢
-
-感谢所有为这个项目做出贡献的开发者！ 
+完成后，你可以访问 `http://localhost:3001` 来使用 ProtoFlow 协议分析器。
