@@ -54,8 +54,8 @@ RoboTA_full_cloud/
 - **操作系统**：推荐 Linux 或 macOS，Windows 需确保 Python 虚拟环境与 Node.js 工具链可用。
 - **Node.js & npm**：Next.js 15.x 至少需要 Node.js 18.18 或 20 LTS。项目依赖记录在 `package.json`，包括 React 19、Tailwind 等。【F:package.json†L1-L77】
 - **Python**：README 要求 Python 3.9+，ProtoFlow 后端与 LLMcontrolOT3 均依赖 Opentrons 生态库。【F:README.md†L37-L49】
-- **Python 包管理**：建议使用 `venv`/`conda` 创建隔离环境，ProtoFlow 后端依赖 FastAPI、uvicorn、python-multipart、pydantic。【F:opentronsedge/protoflow/backend/requirements.txt†L1-L4】
-- **Opentrons Python API**：ProtoFlow 与 LLMcontrolOT3 均直接调用 `opentrons` 包，需要额外安装（`pip install opentrons`）并准备机器人固件或模拟环境。【F:opentronsedge/protoflow/backend/app.py†L160-L301】【F:LLMcontrolOT3/server/ot_robot_server.py†L1-L200】
+- **Python 包管理**：建议使用 `uv` 创建和管理隔离环境，ProtoFlow 后端依赖 FastAPI、uvicorn、python-multipart、pydantic。【F:opentronsedge/protoflow/backend/requirements.txt†L1-L4】
+- **Opentrons Python API**：ProtoFlow 与 LLMcontrolOT3 均直接调用 `opentrons` 包，需要额外安装（`uv pip install opentrons`）并准备机器人固件或模拟环境。【F:opentronsedge/protoflow/backend/app.py†L160-L301】【F:LLMcontrolOT3/server/ot_robot_server.py†L1-L200】
 - **PyMOL/Streamlit**：若需部署 ChatMol，可安装 PyMOL Open-Source 与 Streamlit。【F:ChatMol/chatmol-streamlit/README.md†L1-L18】
 
 ## 4. 仓库初始化与公共依赖安装
@@ -80,8 +80,71 @@ RoboTA_full_cloud/
    该子项目使用独立端口 `3003`，可作为实验室仪表盘示例。【F:LocalLiving+LLMtalking+jupyternotebook/package.json†L1-L73】
 
 4. **安装 ProtoFlow/LLMcontrolOT3 Python 依赖**
-   - ProtoFlow：创建虚拟环境后安装 requirements 与 `opentrons`。
-   - LLMcontrolOT3：安装 `flask`, `requests`, `openai`，同时准备 DeepSeek 或其他 LLM API Key。【F:LLMcontrolOT3/requirements.txt†L1-L3】【F:LLMcontrolOT3/config/ai_settings.py†L1-L200】
+
+   ### ProtoFlow 协议分析服务依赖安装
+
+   ```bash
+   # 进入 ProtoFlow 后端目录
+   cd opentronsedge/protoflow/backend
+
+   # 使用 uv 创建和管理虚拟环境
+   uv venv
+
+   # 激活虚拟环境
+   # Linux/macOS:
+   source .venv/bin/activate
+   # Windows:
+   # .venv\Scripts\activate
+
+   # 使用 uv 安装基础依赖
+   uv pip install -r requirements.txt
+
+   # 安装 Opentrons Python API
+   uv pip install opentrons
+   ```
+
+   ### LLMcontrolOT3 机器人控制服务依赖安装
+
+   ```bash
+   # 进入 LLMcontrolOT3 目录
+   cd LLMcontrolOT3
+
+   # 使用 uv 创建和管理虚拟环境
+   uv venv
+
+   # 激活虚拟环境
+   # Linux/macOS:
+   source .venv/bin/activate
+   # Windows:
+   # .venv\Scripts\activate
+
+   # 使用 uv 安装基础依赖
+   uv pip install -r requirements.txt
+
+   # 安装 Opentrons Python API（如需要直接控制机器人）
+   uv pip install opentrons
+
+   # 可选：安装额外的机器学习库（如需要）
+   uv pip install numpy pandas scikit-learn
+   ```
+
+   ### 环境变量配置
+
+   创建 `.env` 文件或在系统环境中设置以下变量：
+
+   ```bash
+   # LLM API 密钥
+   export DEEPSEEK_API_KEY="your_deepseek_api_key_here"
+   export OPENAI_API_KEY="your_openai_api_key_here"
+
+   # 机器人配置
+   export OT3_ROBOT_IP="your_robot_ip_here"
+   export OT3_ROBOT_PORT="31950"
+
+   # 服务器配置
+   export SERVER_HOST="0.0.0.0"
+   export SERVER_PORT="5000"
+   ```
 
 ## 5. SynbioCloudLab（Next.js 15）前端应用
 
@@ -126,10 +189,10 @@ npm run start  # 在构建后启动生产服务器
 1. **准备虚拟环境并安装依赖**
    ```bash
    cd opentronsedge/protoflow/backend
-   python -m venv .venv
+   uv venv
    source .venv/bin/activate  # Windows 使用 .venv\Scripts\activate
-   pip install -r requirements.txt
-   pip install opentrons  # 需要额外安装
+   uv pip install -r requirements.txt
+   uv pip install opentrons  # 需要额外安装
    ```
    【F:opentronsedge/protoflow/backend/requirements.txt†L1-L4】【F:opentronsedge/protoflow/backend/app.py†L160-L301】
 
@@ -183,10 +246,10 @@ LLMcontrolOT3 将 Flask API、Opentrons 控制逻辑和大模型解析结合，�
 1. 创建虚拟环境并安装依赖：
    ```bash
    cd LLMcontrolOT3
-   python -m venv .venv
+   uv venv
    source .venv/bin/activate
-   pip install -r requirements.txt
-   pip install opentrons
+   uv pip install -r requirements.txt
+   uv pip install opentrons
    ```
    【F:LLMcontrolOT3/requirements.txt†L1-L3】
 
@@ -218,7 +281,7 @@ ChatMol 提供多种面向 PyMOL 的交互方式，包括插件、迷你 GUI、S
 - **PyMOL 插件**：可通过 `load https://raw.githubusercontent.com/ChatMol/ChatMol/main/chatmol.py` 安装。适合直接在 PyMOL 中执行自然语言命令。【F:ChatMol/README.md†L33-L52】
 - **miniGUI**：运行 `python miniGUI.py` 启动独立界面，可保留会话历史。【F:ChatMol/README.md†L54-L62】
 - **Streamlit 应用**：安装 PyMOL、Streamlit、OpenAI/Anthropic 等依赖后执行 `streamlit run chatmol-streamlit.py`。【F:ChatMol/chatmol-streamlit/README.md†L1-L18】
-- **Python 包**：`pip install chatmol` 后可在脚本中调用 ChatMol 提供的多种 LLM 客户端与 PyMOL 会话管理工具。【F:ChatMol/chatmol_pkg/README.md†L1-L44】
+- **Python 包**：`uv pip install chatmol` 后可在脚本中调用 ChatMol 提供的多种 LLM 客户端与 PyMOL 会话管理工具。【F:ChatMol/chatmol_pkg/README.md†L1-L44】
 
 部署时需准备对应的 API Key（OpenAI、Anthropic 等）并在环境变量中配置。
 
