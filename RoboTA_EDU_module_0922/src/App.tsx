@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Home } from './pages/Home';
 import { PlatformHome } from './pages/PlatformHome';
@@ -31,9 +31,16 @@ import { Module2Purification } from './pages/modules/module-2/Module2Purificatio
 // Module 3 pages
 import { Module3Home } from './pages/modules/module-3/Module3Home';
 
-function App() {
+interface AppProps {
+  basename?: string;
+  useHashRouting?: boolean;
+}
+
+function App({ basename = '/', useHashRouting = false }: AppProps) {
+  const RouterComponent = useHashRouting ? HashRouter : BrowserRouter;
+
   return (
-    <Router>
+    <RouterComponent basename={basename}>
       <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50">
         <Navigation />
         <main className="container mx-auto px-4 py-8">
@@ -73,7 +80,7 @@ function App() {
           </Routes>
         </main>
       </div>
-    </Router>
+    </RouterComponent>
   );
 }
 
