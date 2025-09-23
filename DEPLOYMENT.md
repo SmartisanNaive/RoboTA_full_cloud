@@ -2,6 +2,7 @@
 
 > 本文档汇总了 RoboTA-SynbioCloudLab 仓库中所有主要组件（Next.js 前端、ProtoFlow 协议分析服务、LLMcontrolOT3 机器人控制层、ChatMol 分子设计工具及辅助子项目）的安装、配置、联调与运维要点，帮助团队完成本地开发、预发布和线上部署。
 
+<<<<<<< HEAD
 > **重要提示**: 本项目统一使用 `uv` 作为 Python 包管理工具，确保依赖管理和环境隔离的一致性。
 
 ## 目录
@@ -86,6 +87,25 @@ streamlit run chatmol-streamlit/chatmol-streamlit.py
 ```
 
 ## 2. 项目概览
+=======
+## 目录
+- [1. 项目概览](#1-项目概览)
+- [2. 目录结构与角色划分](#2-目录结构与角色划分)
+- [3. 环境要求](#3-环境要求)
+- [4. 仓库初始化与公共依赖安装](#4-仓库初始化与公共依赖安装)
+- [5. SynbioCloudLab（Next.js 15）前端应用](#5-synbiocloudlabnextjs-15前端应用)
+- [6. ProtoFlow 协议分析服务](#6-protoflow-协议分析服务)
+  - [6.1 FastAPI 后端](#61-fastapi-后端)
+  - [6.2 React 前端查看器](#62-react-前端查看器)
+  - [6.3 联调与自测](#63-联调与自测)
+- [7. LLMcontrolOT3 机器人控制与自然语言接口](#7-llmcontrolot3-机器人控制与自然语言接口)
+- [8. ChatMol 分子设计生态](#8-chatmol-分子设计生态)
+- [9. 其他子项目与扩展界面](#9-其他子项目与扩展界面)
+- [10. 推荐的部署拓扑与网络规划](#10-推荐的部署拓扑与网络规划)
+- [11. 安全与运维建议](#11-安全与运维建议)
+
+## 1. 项目概览
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
 
 RoboTA-SynbioCloudLab 是一个面向合成生物学的云端实验平台，提供虚拟实验室、Python 代码执行、Opentrons 协议分析、实验可视化和 AI 协助设计等能力。【F:README.md†L1-L33】
 
@@ -116,11 +136,16 @@ RoboTA_full_cloud/
 
 各目录的更细粒度说明请参阅各自子目录下的 README（例如 ProtoFlow、LLMcontrolOT3 与 ChatMol）。【F:README.md†L14-L35】【F:LLMcontrolOT3/readme.md†L1-L186】【F:ChatMol/README.md†L1-L92】
 
+<<<<<<< HEAD
 ## 4. 环境要求
+=======
+## 3. 环境要求
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
 
 - **操作系统**：推荐 Linux 或 macOS，Windows 需确保 Python 虚拟环境与 Node.js 工具链可用。
 - **Node.js & npm**：Next.js 15.x 至少需要 Node.js 18.18 或 20 LTS。项目依赖记录在 `package.json`，包括 React 19、Tailwind 等。【F:package.json†L1-L77】
 - **Python**：README 要求 Python 3.9+，ProtoFlow 后端与 LLMcontrolOT3 均依赖 Opentrons 生态库。【F:README.md†L37-L49】
+<<<<<<< HEAD
 - **Python 包管理**：**强制使用 `uv`** 创建和管理隔离环境，确保依赖版本一致性。ProtoFlow 后端依赖 FastAPI、uvicorn、python-multipart、pydantic。【F:opentronsedge/protoflow/backend/requirements.txt†L1-L4】
 - **Opentrons Python API**：ProtoFlow 与 LLMcontrolOT3 均直接调用 `opentrons` 包，需要额外安装（`uv pip install opentrons`）并准备机器人固件或模拟环境。【F:opentronsedge/protoflow/backend/app.py†L160-L301】【F:LLMcontrolOT3/server/ot_robot_server.py†L1-L200】
 - **PyMOL/Streamlit**：若需部署 ChatMol，可安装 PyMOL Open-Source 与 Streamlit。【F:ChatMol/chatmol-streamlit/README.md†L1-L18】
@@ -268,6 +293,103 @@ cd ..
 ## 6. SynbioCloudLab（Next.js 15）前端应用
 
 ### 6.1 开发与构建命令
+=======
+- **Python 包管理**：建议使用 `uv` 创建和管理隔离环境，ProtoFlow 后端依赖 FastAPI、uvicorn、python-multipart、pydantic。【F:opentronsedge/protoflow/backend/requirements.txt†L1-L4】
+- **Opentrons Python API**：ProtoFlow 与 LLMcontrolOT3 均直接调用 `opentrons` 包，需要额外安装（`uv pip install opentrons`）并准备机器人固件或模拟环境。【F:opentronsedge/protoflow/backend/app.py†L160-L301】【F:LLMcontrolOT3/server/ot_robot_server.py†L1-L200】
+- **PyMOL/Streamlit**：若需部署 ChatMol，可安装 PyMOL Open-Source 与 Streamlit。【F:ChatMol/chatmol-streamlit/README.md†L1-L18】
+
+## 4. 仓库初始化与公共依赖安装
+
+1. **克隆仓库**
+   ```bash
+   git clone <repo-url>
+   cd RoboTA_full_cloud
+   ```
+
+2. **安装 Next.js 主应用依赖**
+   ```bash
+   npm install
+   ```
+   根级 `package.json` 已定义 `dev`、`build`、`start`、`lint` 脚本，可在后续章节按需调用。【F:package.json†L5-L9】
+
+3. **安装辅助 Next.js Demo（可选）**
+   ```bash
+   cd LocalLiving+LLMtalking+jupyternotebook
+   npm install
+   ```
+   该子项目使用独立端口 `3003`，可作为实验室仪表盘示例。【F:LocalLiving+LLMtalking+jupyternotebook/package.json†L1-L73】
+
+4. **安装 ProtoFlow/LLMcontrolOT3 Python 依赖**
+
+   ### ProtoFlow 协议分析服务依赖安装
+
+   ```bash
+   # 进入 ProtoFlow 后端目录
+   cd opentronsedge/protoflow/backend
+
+   # 使用 uv 创建和管理虚拟环境
+   uv venv
+
+   # 激活虚拟环境
+   # Linux/macOS:
+   source .venv/bin/activate
+   # Windows:
+   # .venv\Scripts\activate
+
+   # 使用 uv 安装基础依赖
+   uv pip install -r requirements.txt
+
+   # 安装 Opentrons Python API
+   uv pip install opentrons
+   ```
+
+   ### LLMcontrolOT3 机器人控制服务依赖安装
+
+   ```bash
+   # 进入 LLMcontrolOT3 目录
+   cd LLMcontrolOT3
+
+   # 使用 uv 创建和管理虚拟环境
+   uv venv
+
+   # 激活虚拟环境
+   # Linux/macOS:
+   source .venv/bin/activate
+   # Windows:
+   # .venv\Scripts\activate
+
+   # 使用 uv 安装基础依赖
+   uv pip install -r requirements.txt
+
+   # 安装 Opentrons Python API（如需要直接控制机器人）
+   uv pip install opentrons
+
+   # 可选：安装额外的机器学习库（如需要）
+   uv pip install numpy pandas scikit-learn
+   ```
+
+   ### 环境变量配置
+
+   创建 `.env` 文件或在系统环境中设置以下变量：
+
+   ```bash
+   # LLM API 密钥
+   export DEEPSEEK_API_KEY="your_deepseek_api_key_here"
+   export OPENAI_API_KEY="your_openai_api_key_here"
+
+   # 机器人配置
+   export OT3_ROBOT_IP="your_robot_ip_here"
+   export OT3_ROBOT_PORT="31950"
+
+   # 服务器配置
+   export SERVER_HOST="0.0.0.0"
+   export SERVER_PORT="5000"
+   ```
+
+## 5. SynbioCloudLab（Next.js 15）前端应用
+
+### 5.1 开发与构建命令
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
 
 ```bash
 # 开发模式（默认端口 3000）
@@ -282,7 +404,11 @@ npm run start  # 在构建后启动生产服务器
 
 项目启用了 `reactStrictMode`，并将 `shiki` 标记为服务器外部依赖，如果部署在 Serverless 环境需确保运行时可访问对应模块。【F:next.config.mjs†L1-L10】
 
+<<<<<<< HEAD
 ### 6.2 关键页面与功能
+=======
+### 5.2 关键页面与功能
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
 
 - **虚拟实验室**：`app/virtual-lab/page.tsx` 提供 Python/Opentrons 编辑器、日志输出，并可在本地/远程 ProtoFlow 服务之间切换。默认远程指向 `http://120.241.223.14:8000/api/analyze` 与 `http://120.241.223.14:3001`，切换开关会改为本地 `localhost`。【F:app/virtual-lab/page.tsx†L152-L389】
   - 如需在部署环境中使用自建 ProtoFlow，请编辑 `serverConfig` 或改为读取环境变量。
@@ -295,7 +421,11 @@ npm run start  # 在构建后启动生产服务器
 
 - **国际化与组件库**：`LanguageProvider` 与 `translations/index.ts` 支持中英双语；UI 主要使用 shadcn/ui 与 lucide 图标。
 
+<<<<<<< HEAD
 ### 6.3 部署注意事项
+=======
+### 5.3 部署注意事项
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
 
 1. **环境变量**：建议在 `.env.local` 中声明自定义的 ProtoFlow API、Viewer URL、LLM 网关等，再在代码中通过 `process.env` 注入，避免将真实地址写死在仓库中。
 2. **Python 执行安全**：在生产环境中执行用户 Python 代码前应增加沙箱（Docker、Firejail 等）或白名单模块检查。当前仓库仅对 import 模块进行简单校验，需要进一步加固。【F:app/api/execute-python/route.ts†L33-L51】
@@ -335,6 +465,7 @@ npm run start  # 在构建后启动生产服务器
 - `src/App.jsx` 基于 MUI 设计主框架，`<Outlet />` 用于 React Router 渲染子页面，适合集成时间轴、详情视图等组件。【F:opentronsedge/protoflow/frontend/src/App.jsx†L1-L183】
 - `src/components/UploadPage.jsx` 默认指向 `http://localhost:8000/api`，部署到生产环境时请根据实际域名/端口修改 `API_URL`，并考虑通过环境变量注入。【F:opentronsedge/protoflow/frontend/src/components/UploadPage.jsx†L1-L149】
 
+<<<<<<< HEAD
 #### ProtoFlow 前端查看器启动方法
 
 **准备条件**
@@ -535,6 +666,17 @@ python -m http.server 3001 -d dist
 4. **资源优化**：
    - 静态资源使用 CDN 时，保留 `dist/assets/` 指纹文件并设置长缓存
    - 若嵌入 Next.js 页面，可在构建后使用 `cp -R dist public/protoflow` 由 Next.js 托管
+=======
+如果需要快速搭建：
+
+```bash
+cd opentronsedge/protoflow/frontend
+npm install  # 初始化 Vite/React 依赖
+npm run dev  # 监听 3001 端口
+```
+
+如需自定义 Router，请创建 `src/main.jsx`，使用 `createBrowserRouter` 设置 `basename='/protoflow'` 以兼容子路径部署（参考根 README 的更新记录）。【F:README.md†L18-L35】
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
 
 ### 6.3 联调与自测
 
@@ -615,6 +757,7 @@ ChatMol 提供多种面向 PyMOL 的交互方式，包括插件、迷你 GUI、S
 - LLMcontrolOT3 建议与机器人控制网络隔离，通过 VPN 或零信任访问。
 - 如需多租户支持，可使用 JWT/OIDC 替换演示用登录接口，并在各服务间传递访问令牌。
 
+<<<<<<< HEAD
 ## 12. 环境变量配置
 
 ### 12.1 环境变量文件示例
@@ -734,6 +877,9 @@ STREAMLIT_SERVER_ADDRESS=0.0.0.0
    ```
 
 ## 13. 安全与运维建议
+=======
+## 11. 安全与运维建议
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
 
 1. **凭证管理**：
    - 移除仓库中的测试 API Key，将 `DEEPSEEK_API_KEY`、OpenAI Key 等写入环境变量或秘密管理系统。【F:LLMcontrolOT3/config/ai_settings.py†L1-L200】
@@ -756,6 +902,7 @@ STREAMLIT_SERVER_ADDRESS=0.0.0.0
 6. **文档维护**：
    - 若新增环境变量或接口，请同步更新本手册与各模块 README，确保团队成员获取到一致的部署说明。【F:README.md†L14-L35】
 
+<<<<<<< HEAD
 ## 14. 部署最佳实践
 
 ### 14.1 容器化部署建议
@@ -1082,3 +1229,8 @@ echo "Backup completed: $BACKUP_DIR/$DATE"
 > - [ ] 监控告警已设置
 > - [ ] 安全策略已启用
 > - [ ] 性能测试已通过
+=======
+---
+
+> 如需进一步的 CI/CD、容器化或云平台部署示例，可在上述基础上引入 Docker/Helm 文件，或参考 Opentrons 官方脚手架与 Next.js 官方部署文档。
+>>>>>>> 8352a6882696518701a1302e3a03d1a7c4beb87f
