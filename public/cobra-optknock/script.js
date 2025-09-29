@@ -9,6 +9,8 @@ let simulationConfig = {
     geneSet: null
 }
 
+const SCENARIO_ENDPOINT = '/cobra-optknock/data/default-scenario.json';
+
 // Speed mode helpers
 let speedMode = false;
 let originalTimeouts = [];
@@ -231,6 +233,28 @@ function showStep(stepNumber) {
     if (speedButton) {
         speedButton.classList.add('show');
     }
+
+    // Configure the automation step buttons when on step 7
+    const automationButtons = document.getElementById('step-7-buttons');
+    if (automationButtons) {
+        if (stepNumber === 7) {
+            automationButtons.innerHTML = `
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(6)">
+                        <i class="fas fa-arrow-left"></i> Back to analysis
+                    </button>
+                    <button class="btn btn-primary" onclick="resetSimulation()">
+                        Restart module <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            `;
+            automationButtons.style.display = 'block';
+            automationButtons.style.opacity = '1';
+            automationButtons.style.transform = 'translateY(0)';
+        } else {
+            automationButtons.style.display = 'none';
+        }
+    }
 }
 
 // Handle previous step
@@ -300,7 +324,7 @@ function navigateToStep(targetStep) {
 
 // Determine if navigation to the step is possible
 function canNavigateToStep(targetStep) {
-    if (targetStep < 1 || targetStep > 6) {
+    if (targetStep < 1 || targetStep > 7) {
         return false;
     }
     
@@ -328,6 +352,8 @@ function isStepCompleted(stepNumber) {
             return optKnockResults !== null;
         case 6:
             return optKnockResults !== null;
+        case 7:
+            return optKnockResults !== null;
         default:
             return false;
     }
@@ -341,7 +367,8 @@ function showStepValidationAlert(targetStep, missingSteps) {
         3: 'Parameter setup',
         4: 'Gene set selection',
         5: 'OptKnock execution',
-        6: 'Result analysis'
+        6: 'Result analysis',
+        7: 'Automated execution'
     };
     
     const missingStepNames = missingSteps.map(step => stepNames[step]).join(', ');
@@ -942,15 +969,19 @@ async function runOptKnock() {
     
     // Retrieve optimisation results
     try {
-        const response = await fetch(`/api/scenario?geneset=${simulationConfig.geneSet}&glucose=${simulationConfig.glucoseConc}&target=${simulationConfig.targetProduct}&knockout=${simulationConfig.knockoutSize}`);
+        const response = await fetch(SCENARIO_ENDPOINT, { cache: 'no-store' });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
         const data = await response.json();
-        
-        if (data.success && data.scenario) {
+
+        if (data && data.success && data.scenario) {
             optKnockResults = data.scenario;
             addTerminalOutput('>> Fetching optimization results from server...', 'info');
             displayOptKnockResults();
         } else {
-            // Use simulated data when retrieval fails
             addTerminalOutput('>> Generating simulated optimisation results...', 'info');
             generateMockResults();
         }
@@ -964,7 +995,7 @@ async function runOptKnock() {
     setTimeout(() => {
         addTerminalOutput('', 'output');
         addTerminalOutput('OptKnock run complete. Use the button below to review the analysis.', 'info');
-        showStepButtons(6);
+        showStepButtons(7);
     }, 1000);
 }
 

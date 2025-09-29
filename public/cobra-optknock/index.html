@@ -47,6 +47,10 @@
                     <div class="step-number">6</div>
                     <div class="step-title">Results Analysis</div>
                 </div>
+                <div class="step" data-step="7">
+                    <div class="step-number">7</div>
+                    <div class="step-title">Automated Execution</div>
+                </div>
             </div>
 
             <!-- Content area -->
@@ -255,6 +259,127 @@
                         <button class="action-btn" onclick="resetSimulation()">
                             <i class="fas fa-redo"></i> Restart Simulation
                         </button>
+                    </div>
+
+                    <!-- Step 7: automated execution -->
+                    <div class="step-content" id="step-7" style="display: none;">
+                        <h2><i class="fas fa-robot"></i> Step 7 · Automated Experiment Execution</h2>
+                        <p class="step-subtitle">Launch the growth-coupled strain on automated hardware and stream live telemetry.</p>
+
+                        <div class="automation-grid">
+                            <div class="automation-card">
+                                <div class="automation-badge">Experiment design</div>
+                                <div class="automation-conditions">
+                                    <div>
+                                        <h3>Culture conditions</h3>
+                                        <ul>
+                                            <li>Temperature · 37 °C</li>
+                                            <li>pH · 7.0 ± 0.1</li>
+                                            <li>Dissolved oxygen · 30 %</li>
+                                            <li>Agitation · 200 rpm</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3>Monitoring signals</h3>
+                                        <ul>
+                                            <li>Optical density (OD<sub>600</sub>)</li>
+                                            <li>Biomass capacitance</li>
+                                            <li>Off-gas CO<sub>2</sub> / O<sub>2</sub></li>
+                                            <li>Culture temperature</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3>Run profile</h3>
+                                        <ul>
+                                            <li>Duration · 48 hours</li>
+                                            <li>Feeding · exponential, 0.4 h<sup>-1</sup></li>
+                                            <li>Sampling · every 4 hours</li>
+                                            <li>Replicates · triplicate run</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="automation-actions">
+                                    <button class="automation-start">
+                                        <span class="live-dot"></span>
+                                        Start automated execution
+                                    </button>
+                                    <span class="automation-status">Robot state · ONLINE · Control loop stable</span>
+                                </div>
+                            </div>
+
+                            <div class="automation-live">
+                                <div class="automation-live-badge">
+                                    <span class="live-dot"></span>
+                                    Live feed
+                                </div>
+                                <video src="/lab.mp4" autoplay muted playsinline loop></video>
+                                <div class="automation-live-caption">Automated bioreactor monitoring</div>
+                            </div>
+                        </div>
+
+                        <div class="automation-metrics">
+                            <div class="automation-chart">
+                                <h3>Growth profile</h3>
+                                <svg viewBox="0 0 240 110">
+                                    <defs>
+                                        <linearGradient id="growth-line" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#22c55e" />
+                                            <stop offset="100%" stop-color="#0ea5e9" />
+                                        </linearGradient>
+                                        <linearGradient id="growth-area" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#22c55e" stop-opacity="0.35" />
+                                            <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M20 80 L70 62 L120 48 L170 34 L220 22" stroke="url(#growth-line)" stroke-width="6" fill="none" stroke-linecap="round" />
+                                    <path d="M20 80 L70 62 L120 48 L170 34 L220 22 L220 90 L20 90 Z" fill="url(#growth-area)" />
+                                </svg>
+                                <p>Real-time OD<sub>600</sub> readings (log phase)</p>
+                            </div>
+                            <div class="automation-chart">
+                                <h3>Product formation</h3>
+                                <svg viewBox="0 0 240 110">
+                                    <defs>
+                                        <linearGradient id="product-line" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#6366f1" />
+                                            <stop offset="100%" stop-color="#22d3ee" />
+                                        </linearGradient>
+                                        <linearGradient id="product-area" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#6366f1" stop-opacity="0.35" />
+                                            <stop offset="100%" stop-color="#22d3ee" stop-opacity="0" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M20 84 L80 68 L140 46 L200 26" stroke="url(#product-line)" stroke-width="6" fill="none" stroke-linecap="round" />
+                                    <path d="M20 84 L80 68 L140 46 L200 26 L200 90 L20 90 Z" fill="url(#product-area)" />
+                                </svg>
+                                <p>Succinate productivity trajectory (mmol gDW<sup>-1</sup> h<sup>-1</sup>)</p>
+                            </div>
+                            <div class="automation-summary">
+                                <div class="metric-card">
+                                    <span class="metric-label">Max OD<sub>600</sub></span>
+                                    <span class="metric-value">0.85</span>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Succinate yield</span>
+                                    <span class="metric-value">67.3 mM</span>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Residual glucose</span>
+                                    <span class="metric-value">0.89 g/L</span>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Productivity</span>
+                                    <span class="metric-value">1.2 g/L·h</span>
+                                </div>
+                                <div class="automation-alert">
+                                    ✅ Automated validation successful. Growth-coupled production stays within ±4.1% of the simulated optimum.
+                                </div>
+                                <button class="automation-next">Proceed to optimisation</button>
+                            </div>
+                        </div>
+
+                        <!-- Step control button container -->
+                        <div id="step-7-buttons" class="step-control-buttons" style="display: none;"></div>
                     </div>
                 </div>
 

@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "scenario": {
+    "knockout_genes": "ACONTa, ICNT, SUCOAS",
+    "knockout_type": "Reaction knockout",
+    "wildtype_production": 0.46,
+    "mutant_production": 2.88,
+    "wildtype_growth": 0.82,
+    "mutant_growth": 0.71,
+    "improvement": 525.0,
+    "growth_change": -0.11,
+    "growth_coupled": true,
+    "carbon_efficiency": 87.3,
+    "atp_efficiency": 91.6,
+    "redox_balance": "balanced"
+  }
+}
