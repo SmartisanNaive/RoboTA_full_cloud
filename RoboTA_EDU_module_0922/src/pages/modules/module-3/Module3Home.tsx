@@ -5,6 +5,7 @@ import { ProgressIndicator } from '../../../components/shared/ProgressIndicator'
 import { ContentLayout } from '../../../components/shared/ContentLayout';
 import { SliderControl } from '../../../components/shared/FormControls';
 import { InteractiveChart } from '../../../components/shared/InteractiveChart';
+import { ModulePageHeader } from '../../../components/shared/ModulePageHeader';
 
 export const Module3Home: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -802,21 +803,16 @@ export const Module3Home: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-accent-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg">
-              <Calculator className="h-7 w-7 text-white" />
-            </div>
-            <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-accent-600 to-blue-600 bg-clip-text text-transparent">
-                Module 3: Computational Modeling and System Verification
-              </h1>
-              <p className="text-lg text-gray-600 mt-2">
-                Interactive mathematical modeling of biological systems with enhanced precision
-              </p>
-            </div>
-          </div>
-        </div>
+        <ModulePageHeader
+          icon={Calculator}
+          title="Module 3 · Computational Modeling and System Verification"
+          subtitle="Interactive mathematical modeling of biological systems with enhanced precision"
+          gradientFrom="from-accent-600"
+          gradientTo="to-blue-600"
+          iconGradientFrom="from-accent-500"
+          iconGradientTo="to-blue-500"
+          accentDotColor="bg-sky-400"
+        />
 
         <ProgressIndicator steps={steps} currentStep={currentStep} />
         

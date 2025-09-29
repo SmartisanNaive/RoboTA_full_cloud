@@ -3,6 +3,8 @@ export const translations = {
     // Navigation
     home: "Home",
     course: "Course",
+    interactiveLearning: "Interactive Learning",
+    interactiveLearningDesc: "Hands-on modules to practice guided experiments and simulations.",
     virtualLab: "Virtual Lab",
     realLab: "Real Lab",
     resources: "Resources",
@@ -44,12 +46,12 @@ export const translations = {
     nextModule: "Next Module",
     
     // Module titles
-    module1Title: "Module 1: Introduction to Synthetic Biology",
-    module2Title: "Module 2: DNA and Genetic Engineering",
-    module3Title: "Module 3: Protein Engineering",
-    module4Title: "Module 4: Metabolic Engineering",
-    module5Title: "Module 5: Cell-Free Systems",
-    module6Title: "Module 6: Lab Automation",
+    module1Title: "Module 1 · Introduction to Synthetic Biology",
+    module2Title: "Module 2 · DNA and Genetic Engineering",
+    module3Title: "Module 3 · Protein Engineering",
+    module4Title: "Module 4 · Metabolic Engineering",
+    module5Title: "Module 5 · Cell-Free Systems",
+    module6Title: "Module 6 · Lab Automation",
     
     // Module content
     module1Content: "Learn the fundamentals of synthetic biology, including basic concepts, history, and applications...",
@@ -166,6 +168,8 @@ export const translations = {
     // 导航
     home: "首页",
     course: "课程",
+    interactiveLearning: "互动学习",
+    interactiveLearningDesc: "通过引导式实验和仿真进行实践学习。",
     virtualLab: "虚拟实验室",
     realLab: "实际实验室",
     resources: "资源",
@@ -207,12 +211,12 @@ export const translations = {
     nextModule: "下一模块",
     
     // 模块标题
-    module1Title: "模块1：合成生物学导论",
-    module2Title: "模块2：DNA与基因工程",
-    module3Title: "模块3：蛋白质工程",
-    module4Title: "模块4：代谢工程",
-    module5Title: "模块5：无细胞系统",
-    module6Title: "模块6：实验室自动化",
+    module1Title: "模块1 · 合成生物学导论",
+    module2Title: "模块2 · DNA与基因工程",
+    module3Title: "模块3 · 蛋白质工程",
+    module4Title: "模块4 · 代谢工程",
+    module5Title: "模块5 · 无细胞系统",
+    module6Title: "模块6 · 实验室自动化",
     
     // 模块内容
     module1Content: "学习合成生物学的基础知识，包括基本概念、历史和应用...",

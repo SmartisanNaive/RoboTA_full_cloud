@@ -27,4 +27,4 @@ yarn-error.log*
 next-env.d.ts
 
 # temp directory
-/temp
+/temp*.mp4
