@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptKnock 算法交互式模拟器</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-dna"></i> OptKnock 算法交互式模拟器</h1>
+                <p class="subtitle">基于代谢工程的基因敲除策略优化算法演示</p>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 步骤导航 -->
+            <div class="steps-navigation">
+                <div class="step" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-title">算法介绍</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-title">模型加载</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-title">参数设置</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-title">基因集选择</div>
+                </div>
+                <div class="step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-title">OptKnock执行</div>
+                </div>
+                <div class="step" data-step="6">
+                    <div class="step-number">6</div>
+                    <div class="step-title">结果分析</div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content-area">
+                <!-- 左侧：交互面板 -->
+                <div class="interaction-panel">
+                    <!-- 步骤1：算法介绍 -->
+                    <div class="step-content" id="step-1">
+                        <h2><i class="fas fa-info-circle"></i> OptKnock 算法原理</h2>
+                        <div class="theory-section">
+                            <h3>什么是 OptKnock？</h3>
+                            <p>OptKnock 是一种双层优化算法，用于识别基因敲除策略以提高目标代谢物的产量。它通过数学优化方法找到最佳的基因删除组合。</p>
+                            
+                            <h3>算法核心思想</h3>
+                            <ul>
+                                <li><strong>外层问题</strong>：最大化目标产物的产量</li>
+                                <li><strong>内层问题</strong>：在给定敲除条件下，细胞的最优生长</li>
+                                <li><strong>约束条件</strong>：维持最小生长速率，确保细胞存活</li>
+                            </ul>
+
+                            <div class="formula-box">
+                                <h4>数学表达式：</h4>
+                                <div class="formula">
+                                    max Σ v<sub>target</sub><br>
+                                    s.t. max Σ v<sub>biomass</sub><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;S·v = 0<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;v<sub>min</sub> ≤ v ≤ v<sub>max</sub>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="nextStep(2)">
+                            <i class="fas fa-arrow-right"></i> 开始模拟
+                        </button>
+                    </div>
+
+                    <!-- 步骤2：模型加载 -->
+                    <div class="step-content" id="step-2" style="display: none;">
+                        <h2><i class="fas fa-database"></i> 代谢网络模型加载</h2>
+                        <div class="theory-section">
+                            <h3>iJO1366 模型简介</h3>
+                            <p>iJO1366 是大肠杆菌的全基因组规模代谢网络重建模型，包含：</p>
+                            <ul>
+                                <li><strong>1366个基因</strong></li>
+                                <li><strong>2583个反应</strong></li>
+                                <li><strong>1805个代谢物</strong></li>
+                                <li><strong>多个细胞区室</strong>：细胞质、周质、胞外</li>
+                            </ul>
+                        </div>
+                        <button class="action-btn" onclick="loadModel()">
+                            <i class="fas fa-download"></i> 加载 iJO1366 模型
+                        </button>
+                        
+                        <!-- 步骤控制按钮容器 -->
+                        <div id="step-2-buttons" class="step-control-buttons" style="display: none;">
+                        </div>
+                    </div>
+
+                    <!-- 步骤3：参数设置 -->
+                    <div class="step-content" id="step-3" style="display: none;">
+                        <h2><i class="fas fa-sliders-h"></i> 实验参数配置</h2>
+                        <div class="parameter-grid">
+                            <div class="param-group">
+                                <label for="glucose-conc">葡萄糖浓度 (mmol/gDW·hr)</label>
+                                <select id="glucose-conc">
+                                    <option value="5">5.0</option>
+                                    <option value="10" selected>10.0</option>
+                                    <option value="15">15.0</option>
+                                    <option value="20">20.0</option>
+                                    <option value="25">25.0</option>
+                                </select>
+                            </div>
+                            <div class="param-group">
+                                <label for="target-product">目标产物</label>
+                                <select id="target-product">
+                                    <option value="succinate" selected>琥珀酸 (Succinate)</option>
+                                    <option value="lactate">乳酸 (Lactate)</option>
+                                    <option value="acetate">醋酸 (Acetate)</option>
+                                    <option value="ethanol">乙醇 (Ethanol)</option>
+                                    <option value="formate">甲酸 (Formate)</option>
+                                </select>
+                            </div>
+                            <div class="param-group">
+                                <label for="knockout-size">敲除基因数量</label>
+                                <select id="knockout-size">
+                                    <option value="1">1个基因</option>
+                                    <option value="2" selected>2个基因</option>
+                                    <option value="3">3个基因</option>
+                                </select>
+                            </div>
+                            <div class="param-group">
+                                <label for="min-growth">最小生长速率 (%)</label>
+                                <input type="range" id="min-growth" min="10" max="80" value="30" oninput="updateGrowthValue(this.value)">
+                                <span id="growth-value">30%</span>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="setParameters()">
+                            <i class="fas fa-check"></i> 确认参数设置
+                        </button>
+                        
+                        <!-- 步骤控制按钮容器 -->
+                        <div id="step-3-buttons" class="step-control-buttons" style="display: none;">
+                            <button class="step-btn prev-btn" onclick="prevStep(2)">
+                                <i class="fas fa-arrow-left"></i> 上一步
+                            </button>
+                            <button class="step-btn next-btn" onclick="nextStep(4)">
+                                下一步 <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 步骤4：基因集选择 -->
+                    <div class="step-content" id="step-4" style="display: none;">
+                        <h2><i class="fas fa-dna"></i> 候选基因集选择</h2>
+                        <div class="gene-sets-grid">
+                            <div class="gene-set-card" data-geneset="glycolysis">
+                                <h3><i class="fas fa-fire"></i> 糖酵解途径</h3>
+                                <p>葡萄糖分解为丙酮酸的主要能量代谢途径</p>
+                                <div class="gene-count">17个反应</div>
+                            </div>
+                            <div class="gene-set-card" data-geneset="pentose_phosphate">
+                                <h3><i class="fas fa-recycle"></i> 磷酸戊糖途径</h3>
+                                <p>产生NADPH和核糖-5-磷酸的代谢途径</p>
+                                <div class="gene-count">12个反应</div>
+                            </div>
+                            <div class="gene-set-card" data-geneset="tca_cycle">
+                                <h3><i class="fas fa-sync"></i> TCA循环</h3>
+                                <p>完全氧化丙酮酸的中心代谢途径</p>
+                                <div class="gene-count">13个反应</div>
+                            </div>
+                            <div class="gene-set-card" data-geneset="mixed_central">
+                                <h3><i class="fas fa-network-wired"></i> 混合中心代谢</h3>
+                                <p>结合多个代谢途径的核心反应网络</p>
+                                <div class="gene-count">14个反应</div>
+                            </div>
+                            <div class="gene-set-card" data-geneset="fermentation">
+                                <h3><i class="fas fa-flask"></i> 发酵途径</h3>
+                                <p>缺氧条件下的发酵产物生成途径</p>
+                                <div class="gene-count">11个反应</div>
+                            </div>
+                        </div>
+                        <button class="action-btn" id="select-geneset-btn" onclick="selectGeneSet()" disabled>
+                            <i class="fas fa-arrow-right"></i> 选择基因集
+                        </button>
+                        
+                        <!-- 步骤控制按钮容器 -->
+                        <div id="step-4-buttons" class="step-control-buttons" style="display: none;">
+                        </div>
+                    </div>
+
+                    <!-- 步骤5：OptKnock执行 -->
+                    <div class="step-content" id="step-5" style="display: none;">
+                        <h2><i class="fas fa-cogs"></i> OptKnock 算法执行</h2>
+                        <div class="execution-info">
+                            <div class="current-config">
+                                <h3>当前配置：</h3>
+                                <div class="config-item">
+                                    <span class="label">基因集：</span>
+                                    <span id="selected-geneset-name">-</span>
+                                </div>
+                                <div class="config-item">
+                                    <span class="label">葡萄糖浓度：</span>
+                                    <span id="selected-glucose">-</span> mmol/gDW·hr
+                                </div>
+                                <div class="config-item">
+                                    <span class="label">目标产物：</span>
+                                    <span id="selected-target">-</span>
+                                </div>
+                                <div class="config-item">
+                                    <span class="label">敲除数量：</span>
+                                    <span id="selected-knockout">-</span>个基因
+                                </div>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="runOptKnock()">
+                            <i class="fas fa-play"></i> 运行 OptKnock 算法
+                        </button>
+                        
+                        <!-- 步骤控制按钮容器 -->
+                        <div id="step-5-buttons" class="step-control-buttons" style="display: none;">
+                        </div>
+                    </div>
+
+                    <!-- 步骤6：结果分析 -->
+                    <div class="step-content" id="step-6" style="display: none;">
+                        <h2><i class="fas fa-chart-line"></i> 结果分析与解释</h2>
+                        <div class="results-summary" id="results-summary">
+                            <!-- 结果将通过JavaScript动态填充 -->
+                        </div>
+                        
+                        <!-- 结果分析图表区域 -->
+                        <div class="results-charts" id="results-charts" style="display: none;">
+                            <h3><i class="fas fa-chart-bar"></i> 数据分析图表</h3>
+                            <div class="charts-grid">
+                                <div class="chart-container">
+                                    <canvas id="knockout-comparison-chart"></canvas>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="production-trend-chart"></canvas>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="metabolic-network-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="action-btn" onclick="resetSimulation()">
+                            <i class="fas fa-redo"></i> 重新开始模拟
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 右侧：终端显示 -->
+                <div class="terminal-panel">
+                    <div class="terminal-header">
+                        <div class="terminal-controls">
+                            <span class="control close"></span>
+                            <span class="control minimize"></span>
+                            <span class="control maximize"></span>
+                        </div>
+                        <div class="terminal-title">OptKnock Simulator Terminal</div>
+                    </div>
+                    <div class="terminal-body" id="terminal">
+                        <div class="terminal-line">
+                            <span class="prompt">optknock@simulator:~$</span>
+                            <span class="cursor">█</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 图表预览弹窗 -->
+    <div id="chart-preview-modal" class="chart-modal" style="display: none;">
+        <div class="chart-modal-content">
+            <div class="chart-modal-header">
+                <h3 id="chart-modal-title">途径预览</h3>
+                <button class="chart-modal-close" onclick="closeChartPreview()">&times;</button>
+            </div>
+            <div class="chart-modal-body">
+                <canvas id="preview-chart" width="400" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 悬浮加速按钮 -->
+    <button class="speed-button" id="speed-button" onclick="toggleSpeedMode()" title="加速模式">
+        <i class="fas fa-forward"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
