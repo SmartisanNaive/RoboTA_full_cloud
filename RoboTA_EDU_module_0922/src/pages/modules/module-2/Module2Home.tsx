@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, Droplets, FlaskRound } from 'lucide-react';
+import { ModulePageHeader } from '../../../components/shared/ModulePageHeader';
 import { ModuleCard } from '../../../components/shared/ModuleCard';
 
 export const Module2Home: React.FC = () => {
@@ -30,38 +31,27 @@ export const Module2Home: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Enhanced Module Header */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center space-x-6 mb-8"
-          >
-            <div className="relative">
-              <div className="w-20 h-20 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-3xl flex items-center justify-center shadow-xl">
-                <Zap className="h-10 w-10 text-white" />
-              </div>
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-bounce"></div>
-            </div>
-            <div className="text-left">
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-secondary-600 to-purple-600 bg-clip-text text-transparent">
-                Module 2
-              </h1>
-              <p className="text-xl text-gray-600 mt-2">Cell-free Gene Expression and Analysis</p>
-            </div>
-          </motion.div>
-          
-          <motion.p 
-            className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Dive deep into protein synthesis and purification using cutting-edge cell-free systems. 
-            Learn to express, purify, and analyze proteins with precision and efficiency.
-          </motion.p>
-        </div>
+        {/* Unified Module Header */}
+        <ModulePageHeader
+          icon={Zap}
+          title="Module 2 · Cell-free Gene Expression and Analysis"
+          subtitle="Laboratory automation fundamentals for expression, purification, and assay workflows"
+          gradientFrom="from-secondary-600"
+          gradientTo="to-purple-600"
+          iconGradientFrom="from-secondary-500"
+          iconGradientTo="to-secondary-600"
+          accentDotColor="bg-yellow-400"
+        />
+
+        <motion.p
+          className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+        >
+          Dive deep into protein synthesis and purification using cutting-edge cell-free systems. Learn to express,
+          purify, and analyze proteins with precision and efficiency.
+        </motion.p>
 
         {/* Enhanced Learning Objectives */}
         <motion.div 

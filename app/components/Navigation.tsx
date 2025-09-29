@@ -1,14 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { FlaskRoundIcon as Flask } from "lucide-react"
 import { LanguageSwitch } from "./LanguageSwitch"
 import { useLanguage } from "@/app/contexts/LanguageContext"
 import { translate } from "@/app/utils/translate"
 
 export function Navigation() {
-  const router = useRouter()
   const { language } = useLanguage()
 
   return (
@@ -23,6 +21,7 @@ export function Navigation() {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <NavLink href="/">{translate('home', language)}</NavLink>
               <NavLink href="/experiments">{translate('course', language)}</NavLink>
+              <NavLink href="/interactive-learning">{translate('interactiveLearning', language)}</NavLink>
               <NavLink href="/virtual-lab">{translate('virtualLab', language)}</NavLink>
               <NavLink href="/experiment/real-lab-control">{translate('realLab', language)}</NavLink>
               <NavLink href="/resources">{translate('resources', language)}</NavLink>
@@ -56,4 +55,3 @@ function NavLink({ href, children, ...props }) {
     </Link>
   )
 }
-

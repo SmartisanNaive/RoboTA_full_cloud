@@ -31,6 +31,9 @@ import { Module2Purification } from './pages/modules/module-2/Module2Purificatio
 // Module 3 pages
 import { Module3Home } from './pages/modules/module-3/Module3Home';
 
+// Module 4 pages
+import { Module4Home } from './pages/modules/module-4/Module4Home';
+
 interface AppProps {
   basename?: string;
   useHashRouting?: boolean;
@@ -77,6 +80,9 @@ function App({ basename = '/', useHashRouting = false }: AppProps) {
             
             {/* Module 3 routes */}
             <Route path="/module/3" element={<Module3Home />} />
+
+            {/* Module 4 routes */}
+            <Route path="/module/4" element={<Module4Home />} />
           </Routes>
         </main>
       </div>

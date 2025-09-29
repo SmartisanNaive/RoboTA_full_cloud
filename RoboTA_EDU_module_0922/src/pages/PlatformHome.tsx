@@ -6,7 +6,7 @@ import { ModuleCard } from '../components/shared/ModuleCard';
 export const PlatformHome: React.FC = () => {
   const modules = [
     {
-      title: 'Module 1: Standard Curve, PCR, DNA Purification',
+      title: 'Module 1 · Standard Curve, PCR, DNA Purification',
       description: 'Master fundamental molecular biology techniques through interactive experiments and real-time analysis.',
       path: '/module/1',
       icon: Activity,
@@ -14,7 +14,7 @@ export const PlatformHome: React.FC = () => {
       objectives: ['Serial dilution & standard curves', 'PCR amplification & analysis', 'DNA purification & quantification']
     },
     {
-      title: 'Module 2: Cell-free Gene Expression and Analysis',
+      title: 'Module 2 · Cell-free Gene Expression and Analysis',
       description: 'Explore protein synthesis and purification in controlled cell-free systems with advanced analytics.',
       path: '/module/2',
       icon: Zap,
@@ -22,7 +22,7 @@ export const PlatformHome: React.FC = () => {
       objectives: ['Cell-free protein expression', 'Protein purification techniques', 'Quantitative protein analysis']
     },
     {
-      title: 'Module 3: Computational Modeling and System Verification',
+      title: 'Module 3 · Computational Modeling and System Verification',
       description: 'Build intuitive understanding of biological systems through interactive mathematical modeling.',
       path: '/module/3',
       icon: Calculator,

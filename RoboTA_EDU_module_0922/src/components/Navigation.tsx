@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FlaskRound as Flask, Home, Activity, Zap, Calculator } from 'lucide-react';
+import { FlaskRound as Flask, Home, Activity, Zap, Calculator, Dna } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Navigation: React.FC = () => {
@@ -11,6 +11,7 @@ export const Navigation: React.FC = () => {
     { path: '/module/1', label: 'Module 1', icon: Activity },
     { path: '/module/2', label: 'Module 2', icon: Zap },
     { path: '/module/3', label: 'Module 3', icon: Calculator },
+    { path: '/module/4', label: 'Module 4', icon: Dna },
   ];
 
   return (
